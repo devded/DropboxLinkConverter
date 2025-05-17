@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dropbox Link Converter</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+
+    <div class="bg-white p-6 rounded-xl shadow-md max-w-xl w-full space-y-4 text-center">
+        <!-- Logo -->
+        <img src="https://dl.dropboxusercontent.com/scl/fi/96jln4ud10uv2xj1h0u26/logo.png?rlkey=10jjnx86a9cszpl3xf3m25h0y"
+            alt="Dropbox Link Converter Logo" class="mx-auto h-20 object-contain" />
+
+        <!-- <h2 class="text-2xl font-bold text-gray-800">Dropbox Image Link Converter</h2> -->
+
+        <!-- Input: Dropbox Share Link -->
+        <input type="text" id="dropboxLink" placeholder="Paste your Dropbox share link here"
+            class="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" />
+
+        <!-- Button: Convert -->
+        <button onclick="convertLink()"
+            class="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition">
+            Convert to Direct Link
+        </button>
+
+        <!-- Output: Converted Link -->
+        <div id="outputContainer" class="space-y-2 hidden">
+            <input type="text" id="convertedLink"
+                class="w-full p-3 border border-green-400 rounded-md text-green-800 bg-green-50" readonly />
+            <button onclick="copyLink()"
+                class="w-full bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition">
+                Copy Direct Link
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function convertLink() {
+            const input = document.getElementById('dropboxLink').value.trim();
+            const outputContainer = document.getElementById('outputContainer');
+            const convertedInput = document.getElementById('convertedLink');
+
+            try {
+                const url = new URL(input);
+                if (!url.hostname.includes('dropbox.com')) {
+                    convertedInput.value = '❌ Invalid Dropbox link.';
+                } else {
+                    const directLink = input
+                        .replace('www.dropbox.com', 'dl.dropboxusercontent.com')
+                        .replace('dropbox.com', 'dl.dropboxusercontent.com')
+                        .replace(/(\?dl=\d)|(\&dl=\d)/, '')
+                        .replace(/(\?st=[^&]*)|(\&st=[^&]*)/, '');
+
+                    convertedInput.value = directLink;
+                }
+                outputContainer.classList.remove('hidden');
+            } catch {
+                convertedInput.value = '❌ Invalid URL format.';
+                outputContainer.classList.remove('hidden');
+            }
+        }
+
+        function copyLink() {
+            const linkField = document.getElementById('convertedLink');
+            linkField.select();
+            linkField.setSelectionRange(0, 99999);
+            document.execCommand('copy');
+        }
+    </script>
+
+</body>
+
+</html>
