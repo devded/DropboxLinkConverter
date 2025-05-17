@@ -18,6 +18,8 @@ A simple web tool to convert **Dropbox share links** into **direct image links**
 
 ![Screenshot](https://dl.dropboxusercontent.com/scl/fi/udi1cw7fi177myzh2eywj/snapshot.png?rlkey=f6rtk1rpo0jc3l5vm112pdgrk)
 
+More Details Blog Here 
+
 ## 🔗 Example
 
 **Input Dropbox Link:**
